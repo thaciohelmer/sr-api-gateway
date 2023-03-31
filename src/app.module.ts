@@ -11,4 +11,4 @@ import { ClientProxySmartRanking } from './proxyrmq/client-proxy';
   controllers: [CategoriesController, PlayersController],
   providers: [ClientProxySmartRanking],
 })
-export class AppModule { }
+export class AppModule {}

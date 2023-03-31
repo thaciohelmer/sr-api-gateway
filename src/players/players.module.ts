@@ -4,6 +4,6 @@ import { PlayersController } from './players.controller';
 
 @Module({
   imports: [ProxyRmqModule],
-  controllers: [PlayersController]
+  controllers: [PlayersController],
 })
-export class PlayersModule { }
+export class PlayersModule {}

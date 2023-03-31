@@ -3,6 +3,6 @@ import { ClientProxySmartRanking } from './client-proxy';
 
 @Module({
   providers: [ClientProxySmartRanking],
-  exports: [ClientProxySmartRanking]
+  exports: [ClientProxySmartRanking],
 })
-export class ProxyRmqModule { }
+export class ProxyRmqModule {}
