@@ -31,8 +31,13 @@ export class PlayersController {
   }
 
   @Get('/:id')
-  getPlayers(@Param('id') id: string): Observable<any> {
-    return this.clientAdmBackend.send('get-players', id ? id : '')
+  getPlayerById(@Param('id') id: string): Observable<any> {
+    return this.clientAdmBackend.send('get-player-by-id', id)
+  }
+
+  @Get()
+  getPlayers(): Observable<any> {
+    return this.clientAdmBackend.send('get-players', '')
   }
 
   @Put('/:id')

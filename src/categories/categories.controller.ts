@@ -4,7 +4,7 @@ import { CreateCategoryDto } from 'src/categories/dtos/create-category.dto';
 import { UpdateCategoryDto } from 'src/categories/dtos/update-category.dto';
 import { ClientProxySmartRanking } from 'src/proxyrmq/client-proxy';
 
-@Controller('categories')
+@Controller('api/v1/categories')
 export class CategoriesController {
 
   constructor(private clientProxy: ClientProxySmartRanking) { }
@@ -17,9 +17,19 @@ export class CategoriesController {
     this.clientAdmBackend.emit('create-category', createCategoryDto)
   }
 
+  @Get()
+  getCategories(): Observable<any> {
+    return this.clientAdmBackend.send('get-categories', '')
+  }
+
   @Get('/:id')
-  getCategories(@Param('id') id: string): Observable<any> {
-    return this.clientAdmBackend.send('get-categories', id ? id : '')
+  getCategoryById(@Param('id') id: string): Observable<any> {
+    return this.clientAdmBackend.send('get-category-by-id', id)
+  }
+
+  @Get('/category/:name')
+  getCategoryByName(@Param('name') name: string): Observable<any> {
+    return this.clientAdmBackend.send('get-category-by-name', name)
   }
 
   @Put('/:id')
