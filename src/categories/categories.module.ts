@@ -4,6 +4,6 @@ import { CategoriesController } from './categories.controller';
 
 @Module({
   imports: [ProxyRmqModule],
-  controllers: [CategoriesController]
+  controllers: [CategoriesController],
 })
-export class CategoriesModule { }
+export class CategoriesModule {}
