@@ -16,9 +16,9 @@ import { ChallengesModule } from './challenges/challenges.module';
     ProxyRmqModule,
     AwsModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    ChallengesModule
+    ChallengesModule,
   ],
   controllers: [CategoriesController, PlayersController],
   providers: [ClientProxySmartRanking],
 })
-export class AppModule { }
+export class AppModule {}

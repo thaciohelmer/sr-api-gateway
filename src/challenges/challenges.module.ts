@@ -4,6 +4,6 @@ import { ProxyRmqModule } from 'src/proxyrmq/proxyrmq.module';
 
 @Module({
   imports: [ProxyRmqModule],
-  controllers: [ChallengesController]
+  controllers: [ChallengesController],
 })
-export class ChallengesModule { }
+export class ChallengesModule {}

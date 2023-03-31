@@ -5,6 +5,6 @@ import { AwsModule } from 'src/aws/aws.module';
 
 @Module({
   imports: [ProxyRmqModule, AwsModule],
-  controllers: [PlayersController]
+  controllers: [PlayersController],
 })
-export class PlayersModule { }
+export class PlayersModule {}
