@@ -1,14 +1,19 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { BadRequestException } from '@nestjs/common/exceptions';
-import { Observable } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { ClientProxySmartRanking } from 'src/proxyrmq/client-proxy';
 import { CreatePlayerDTO } from './dtos/create-player.dto';
 import { UpdatePlayerDTO } from './dtos/update-player.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { AwsService } from 'src/aws/aws.service';
 
-@Controller('players')
+@Controller('api/v1/players')
 export class PlayersController {
 
-  constructor(private clientProxy: ClientProxySmartRanking) { }
+  constructor(
+    private clientProxy: ClientProxySmartRanking,
+    private awsService: AwsService
+  ) { }
 
   private readonly clientAdmBackend = this.clientProxy.getAdmBackend()
 
@@ -16,7 +21,7 @@ export class PlayersController {
   @UsePipes(ValidationPipe)
   createPlayer(@Body() createPlayerDto: CreatePlayerDTO): void {
 
-    const category: any = this.clientAdmBackend.send('get-category', createPlayerDto.category)
+    const category: any = this.clientAdmBackend.send('get-category-by-name', createPlayerDto.category)
 
     if (category) {
       this.clientAdmBackend.emit('create-player', createPlayerDto)
@@ -38,6 +43,24 @@ export class PlayersController {
   @Delete('/:id')
   deletePlayer(@Param('id') id: string): Observable<any> {
     return this.clientAdmBackend.emit('delete-player', id)
+  }
+
+  @Post('/:id')
+  @UseInterceptors(FileInterceptor('file'))
+  async fileUpload(@Param('id') id: string, @UploadedFile() file) {
+    const player = await lastValueFrom(this.clientAdmBackend.send('get-players', id))
+
+    if (!player) {
+      throw new BadRequestException('Player not found')
+    }
+
+    const data = await this.awsService.fileUpload(id, file)
+    const updatePlayerDto = new UpdatePlayerDTO()
+    updatePlayerDto.avatarUrl = data.url
+
+    await lastValueFrom(this.clientAdmBackend.emit('update-player', { id, player: updatePlayerDto }))
+
+    return await lastValueFrom(this.clientAdmBackend.send('get-players', id))
   }
 
 }

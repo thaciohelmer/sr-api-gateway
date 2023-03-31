@@ -5,5 +5,5 @@ export class UpdatePlayerDTO {
   readonly phoneNumber: string;
   @IsNotEmpty()
   readonly name: string
-  readonly avatarUrl: string
+  avatarUrl: string
 }
