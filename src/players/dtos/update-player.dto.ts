@@ -1,9 +1,9 @@
-import { IsNotEmpty } from 'class-validator'
+import { IsNotEmpty } from 'class-validator';
 
 export class UpdatePlayerDTO {
   @IsNotEmpty()
   readonly phoneNumber: string;
   @IsNotEmpty()
-  readonly name: string
-  avatarUrl: string
+  readonly name: string;
+  avatarUrl: string;
 }
