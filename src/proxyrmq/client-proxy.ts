@@ -26,7 +26,7 @@ export class ClientProxySmartRanking {
       transport: Transport.RMQ,
       options: {
         urls: [`amqp://${this.RBMQ_USER}:${this.RBMQ_PASSWORD}@${this.RBMQ_URL}`],
-        queue: 'challenge'
+        queue: 'challenges'
       }
     })
   }

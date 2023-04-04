@@ -9,8 +9,8 @@ export class ChallengeStatusValidation implements PipeTransform {
   ]
 
   private isValidStatus(status: string): boolean {
-    const index = Object.keys(this.allowedStatus).indexOf(status)
-    return index !== -1
+    const index = Object.values(this.allowedStatus).find(st => st === status)
+    return !!index
   }
 
   transform(value: any) {

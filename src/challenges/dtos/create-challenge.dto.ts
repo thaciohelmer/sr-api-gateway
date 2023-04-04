@@ -14,5 +14,5 @@ export class CreateChallengeDto {
   @IsArray()
   @ArrayMinSize(2)
   @ArrayMaxSize(2)
-  players: Array<Player>
+  players: Array<string>
 }

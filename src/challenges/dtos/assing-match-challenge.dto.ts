@@ -5,7 +5,7 @@ import { Player } from "src/players/interfaces/player.interface";
 
 export class AssingMatchChallengeDto {
   @IsNotEmpty()
-  def: Player
+  def: string
 
   @IsNotEmpty()
   result: Array<Result>
