@@ -94,9 +94,7 @@ export class ChallengesController {
     @Param('challenge') id: string) {
 
     const challenge: Challenge = await lastValueFrom(this.clientChallenges.send('get-by-id', id))
-
-    console.log('challenge', challenge);
-
+    const category = await lastValueFrom(this.clientAdmBackend.send('get-category-by-name', challenge.category))
 
     if (!challenge) {
       throw new BadRequestException('Challenge not found')
@@ -114,7 +112,7 @@ export class ChallengesController {
       throw new BadRequestException('The winning player of the match must be part of the challenge')
     }
     const match: Match = {
-      category: challenge.category,
+      category: category,
       def: assignMatchChallengeDto.def,
       challenge: id,
       players: challenge.players,
